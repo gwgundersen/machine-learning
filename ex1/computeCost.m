@@ -13,13 +13,12 @@ J = 0;
 % Instructions: Compute the cost of a particular choice of theta
 %               You should set J to the cost.
 
-a = zeros(m, 1)
-for n = 1:m
-    a(n) = (dot(theta, X(n,:)) - y(n))^2
-end
+hyp = X * theta;
+err = hyp - y;
+err_sqr = err.^2;
 
 % You should expect to see a cost of 32.07.
-J = sum(a) / (2*m)
+J = sum(err_sqr) / (2*m);
 
 % =========================================================================
 
