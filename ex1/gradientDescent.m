@@ -11,37 +11,38 @@ m = length(y);
 J_history = zeros(num_iters, 1);
 
 for iter = 1:num_iters
-        
-    % vector of predictions.
-    hyp = X * theta;
 
-    % difference between the predicted and actual values.
-    err = hyp - y;
-
-    % In gradient descent with two parameters, the gradient is a 2-vector
-    % whose components are the two partial derivatives of theta. We can
-    % think of theta as an (x,y) coordinate, while J(theta) is the
-    % z-coordinate. Taking the partial derivative of each component gives
-    % us a vector that points in the direction of greatest/least slope.
+    % The gradient is a vector which points in the direction in the domain
+    % that the function decreases/increases in the most. If
+    % f(x_1,x_2,...,x_n) is a differentiable function, its gradient is a
+    % vector whose components are the partial derviatives of f.
     %
-    % For a mathematical treatment, see:
-    % https://en.wikipedia.org/wiki/Gradient
+    % In gradient descent with two parameters, theta can be thought of as
+    % an (x,y) coordinate, while J(theta) is a z-coordinate. Taking the
+    % partial derivative of x and y gives us a 2-vector (the gradient)
+    % which points in the direction that J(theta) increases/decreases in
+    % the most.
+    %
+    % This is the why the line of code below looks a lot like the cost
+    % function. It is taking the partial derivative of the cost function.
+    %
+    % For a mathematical explanation of the partial derivatives, see:
     % http://math.stackexchange.com/a/189792/159872.
-    gradient = (1/m) * (X' * err);
-
-    % We update theta with gradient. If the gradient is positive, theta
-    % becomes smaller, i.e. we're going the wrong way. If the gradient is
-    % negative, theta becomes bigger, i.e. keep going towards the local
-    % minimum.
     %
-    % Multiply by alpha to moderate the step.
+    % Finally, remember that in this scenario, X is an mx2 matrix where the
+    % first column is filled with 1s. This is why we can take both partial
+    % derivatives at the same time, even though they have slightly
+    % different equations.
+    gradient = (1/m) * (X' * ((X * theta) - y));
+
+    % We update theta with the gradient, moderating the step by alpha. If
+    % the gradient is positive, theta becomes smaller, i.e. we're going the
+    % wrong way. If the gradient is negative, theta becomes bigger, i.e.
+    % keep going towards the local minimum.
     theta = theta - alpha * gradient;
 
-    % ============================================================
-
     % Save the cost J in every iteration 
-    J = computeCost(X, y, theta);
-    J_history(iter) = J;
+    J_history(iter) = computeCost(X, y, theta);
 end
 
 end
