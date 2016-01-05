@@ -13,10 +13,18 @@ J = 0;
 % Instructions: Compute the cost of a particular choice of theta
 %               You should set J to the cost.
 
+% hyp is a vector of predictions.
 hyp = X * theta;
+
+% err is the difference between the predicted and actual values.
 err = hyp - y;
+
+% We square the error to remove the sign while retaining proportions.
 err_sqr = err.^2;
 
+% The cost is, roughly speaking, the average of all the errors.
+% I'm not entirely sure why we divide it by 2*m rather than just m.
+%
 % You should expect to see a cost of 32.07.
 J = sum(err_sqr) / (2*m);
 
