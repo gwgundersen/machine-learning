@@ -22,8 +22,10 @@ err = hyp - y;
 % We square the error to remove the sign while retaining proportions.
 err_sqr = err.^2;
 
-% The cost is, roughly speaking, the average of all the errors.
-% I'm not entirely sure why we divide it by 2*m rather than just m.
+% The cost is, roughly speaking, the average of all the errors. While not
+% explicitly stated, I believe we divide by 2*m rather than just m because
+% the two cancels out when taking the partial derivative of the cost
+% function.
 %
 % You should expect to see a cost of 32.07.
 J = sum(err_sqr) / (2*m);
