@@ -18,10 +18,16 @@ grad = zeros(size(theta));
 %               derivatives of the cost w.r.t. each parameter in theta
 %
 % Note: grad should have the same dimensions as theta
+
+% In the notes, we take the dot product of theta' and x, when both where
+% n-vectors. This gave us a single hypothesis value.
 %
+% Here, we take X * theta, which produces an m-vector where each component
+% is a dot product of a row in X and theta.
+hyp = sigmoid(X * theta);
 
-
-
+% 0.693
+J = sum((-y .* log(hyp)) - ((1-y) .* log(1 - hyp))) / m;
 
 
 
