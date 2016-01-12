@@ -14,8 +14,10 @@ m = length(y);
 % is a dot product of a row in X and theta.
 hyp = sigmoid(X * theta);
 
-% 0.693
 J = sum((-y .* log(hyp)) - ((1-y) .* log(1 - hyp))) / m;
+
+% Identical to the gradient for linear regression, but the hypothesis
+% function has changed.
 grad = (X' * (hyp - y)) / m;
 
 end
