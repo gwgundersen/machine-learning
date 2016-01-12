@@ -7,7 +7,7 @@ function [J, grad] = costFunction(theta, X, y)
 % number of training examples
 m = length(y); 
 
-% In the notes, we take the dot product of theta' and x, when both where
+% In the notes, we take the dot product of theta' and x, when both were
 % n-vectors. This gave us a single hypothesis value.
 %
 % Here, we take X * theta, which produces an m-vector where each component
