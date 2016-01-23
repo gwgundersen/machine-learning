@@ -62,16 +62,34 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% Add ones to the X data matrix
+a1 = [ones(m, 1) X];
 
+% y is a vector where each component represents the correct label, i.e.
+% what number is represented by the 30x30 pixel image.
+%
+% y_matrix is a matrix in which each row is a binary vector with dimension
+% num_labels. For example, for a three-class classifier, the output from
+% the neural network would be a vector [1,0,0], [0,1,0], or [0,0,1]
+% depending on the predicted class.
+temp = eye(num_labels);
+y_matrix = temp(y,:);
 
+% Forwared propagation to calculate hypothesis.
+% ---------------------------------------------
+z2 = a1 * Theta1';
+a2 = sigmoid(z2);
 
+% Add bias units to middle activation units.
+a2 = [ones(m, 1) a2];
+z3 = a2 * Theta2';
+a3 = sigmoid(z3);
 
+% I realize this semantic, but just to be clear: a3 is the hypothesis.
+hyp = a3;
+% ---------------------------------------------
 
-
-
-
-
-
+J = sum(sum((-y_matrix .* log(hyp)) - ((1-y_matrix) .* log(1 - hyp)))) / m;
 
 
 
@@ -86,6 +104,5 @@ Theta2_grad = zeros(size(Theta2));
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
-
 
 end
