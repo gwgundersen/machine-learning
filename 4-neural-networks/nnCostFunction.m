@@ -75,8 +75,8 @@ a1 = [ones(m, 1) X];
 temp = eye(num_labels);
 y_matrix = temp(y,:);
 
-% Forwared propagation to calculate hypothesis.
-% ---------------------------------------------
+% Forwared propagation
+% -------------------------------------------------------------------------
 z2 = a1 * Theta1';
 a2 = sigmoid(z2);
 
@@ -100,18 +100,33 @@ hyp = a3;
 % addition.
 J = sum(sum((-y_matrix .* log(hyp)) - ((1-y_matrix) .* log(1 - hyp)))) / m;
 
-% Regularization term
-% ---------------------------------------------
 
+% Regularization term
+% -------------------------------------------------------------------------
+
+% Don't regularize the bias unit.
 Theta1_ = Theta1(:,2:end);
 Theta2_ = Theta2(:,2:end);
 reg_term = (lambda / (2*m)) * (sum(sum(Theta1_.^2)) + sum(sum(Theta2_.^2)));
 J = J + reg_term;
 
 
-% =========================================================================
+% Backpropagation
+% -------------------------------------------------------------------------
+
+% The initial error: the hypothesis minus the computed values.
+d3 = hyp - y_matrix;
+Theta2_ = Theta2(:,2:end);
+d2 = (d3 * Theta2_) .* sigmoidGradient(z2);
+
+Delta1 = d2' * a1;
+Delta2 = d3' * a2;
+
+Theta1_grad = Delta1 / m;
+Theta2_grad = Delta2 / m;
 
 % Unroll gradients
+% -------------------------------------------------------------------------
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
 end
