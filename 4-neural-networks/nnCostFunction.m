@@ -87,18 +87,27 @@ a3 = sigmoid(z3);
 
 % I realize this semantic, but just to be clear: a3 is the hypothesis.
 hyp = a3;
-% ---------------------------------------------
 
+% Cost is a scalar, so we take the sum twice. This looks cleaner than the 
+% mathmetical notation because the indices are implicit in the size of the
+% matrix.
+% 
+% First, we sum the columns, giving us a row vector. Since we're dealing
+% with an (m x num_labels) vector, the result is a (num_labels)-vector
+% where each component is the sum of the column. Taking the sum again
+% generates a scalar. Notice that this is the opposite order of the
+% mathematical notation, but order of operations does not matter for
+% addition.
 J = sum(sum((-y_matrix .* log(hyp)) - ((1-y_matrix) .* log(1 - hyp)))) / m;
 
+% Regularization term
+% ---------------------------------------------
 
+Theta1_ = Theta1(:,2:end);
+Theta2_ = Theta2(:,2:end);
+reg_term = (lambda / (2*m)) * (sum(sum(Theta1_.^2)) + sum(sum(Theta2_.^2)));
+J = J + reg_term;
 
-
-
-
-
-
-% -------------------------------------------------------------
 
 % =========================================================================
 
