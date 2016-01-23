@@ -75,7 +75,7 @@ a1 = [ones(m, 1) X];
 temp = eye(num_labels);
 y_matrix = temp(y,:);
 
-% Forwared propagation
+% Forwared propagation (compute cost)
 % -------------------------------------------------------------------------
 z2 = a1 * Theta1';
 a2 = sigmoid(z2);
@@ -101,7 +101,7 @@ hyp = a3;
 J = sum(sum((-y_matrix .* log(hyp)) - ((1-y_matrix) .* log(1 - hyp)))) / m;
 
 
-% Regularization term
+% Regularized cost
 % -------------------------------------------------------------------------
 
 % Don't regularize the bias unit.
@@ -111,7 +111,7 @@ reg_term = (lambda / (2*m)) * (sum(sum(Theta1_.^2)) + sum(sum(Theta2_.^2)));
 J = J + reg_term;
 
 
-% Backpropagation
+% Backpropagation (compute gradienet)
 % -------------------------------------------------------------------------
 
 % The initial error: the hypothesis minus the computed values.
@@ -119,11 +119,30 @@ d3 = hyp - y_matrix;
 Theta2_ = Theta2(:,2:end);
 d2 = (d3 * Theta2_) .* sigmoidGradient(z2);
 
+% The accumulation that is explicit in a for-loop implementation is
+% implicit in these matrix-matrix multiplications.
 Delta1 = d2' * a1;
 Delta2 = d3' * a2;
 
 Theta1_grad = Delta1 / m;
 Theta2_grad = Delta2 / m;
+
+
+% Regularized gradient
+% -------------------------------------------------------------------------
+
+% We can mutate Theta1 and Theta2. We don't need them any more.
+% We're setting the first columns to 0, i.e. not regularizing the the bias
+% unit.
+Theta1(:,1) = 0;
+Theta2(:,1) = 0;
+
+reg_term1 = (lambda / m) * Theta1;
+reg_term2 = (lambda / m) * Theta2;
+
+Theta1_grad = Theta1_grad + reg_term1;
+Theta2_grad = Theta2_grad + reg_term2;
+
 
 % Unroll gradients
 % -------------------------------------------------------------------------
