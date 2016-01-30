@@ -164,7 +164,18 @@ pause;
 %  lambda to see how the fit and learning curve change.
 %
 
-lambda = 0;
+% GWG:
+%   Try multiple lambdas:
+%
+%   For lambda = 0, the model overfits the data. You should see the plot
+%   dip down to the right, showing that it will not generalize well.
+%
+%   For lambda = 1, the fit is pretty nice.
+%
+%   For lambda > 1, the fit becomes increasingly poor. This is because we
+%   are penalizing the algorithm too much, and the curve will become
+%   increasingly biased.
+lambda = 1;
 [theta] = trainLinearReg(X_poly, y, lambda);
 
 % Plot training data and fit
