@@ -5,29 +5,20 @@ function idx = findClosestCentroids(X, centroids)
 %   vector of centroid assignments (i.e. each entry in range [1..K])
 %
 
-% Set K
 K = size(centroids, 1);
+m = size(X, 1);
 
-% You need to return the following variables correctly.
-idx = zeros(size(X,1), 1);
+% distances is an mxK matrix in which each row is a K-vector representing
+% the distance from each centroid to the i-th example.
+distances = zeros(m, K);
 
-% ====================== YOUR CODE HERE ======================
-% Instructions: Go over every example, find its closest centroid, and store
-%               the index inside idx at the appropriate location.
-%               Concretely, idx(i) should contain the index of the centroid
-%               closest to example i. Hence, it should be a value in the 
-%               range 1..K
-%
-% Note: You can use a for-loop over the examples to compute this.
-%
-
-
-
-
-
-
-
-% =============================================================
-
+for i = 1:K
+    centroid = centroids(i,:);
+    % Sum of squares for every sample in the matrix X.
+    distances(:,i) = sum(bsxfun(@minus, X, centroid).^2, 2);
 end
 
+% Find the index of centroid with the minimum distance to each example.
+[discard, idx] = min(distances, [], 2);
+
+end
