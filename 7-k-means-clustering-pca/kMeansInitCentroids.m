@@ -5,22 +5,11 @@ function centroids = kMeansInitCentroids(X, K)
 %   used with the K-Means on the dataset X
 %
 
-% You should return this values correctly
-centroids = zeros(K, size(X, 2));
+% Randomly reorder indices of example
+randidx = randperm(size(X, 1));
 
-% ====================== YOUR CODE HERE ======================
-% Instructions: You should set centroids to randomly chosen examples from
-%               the dataset X
-%
-
-
-
-
-
-
-
-
-% =============================================================
+% Take the first K examples as centroids
+centroids = X(randidx(1:K), :);
 
 end
 
