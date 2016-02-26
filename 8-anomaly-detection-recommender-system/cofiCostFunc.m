@@ -41,17 +41,16 @@ Theta_grad = zeros(size(Theta));
 %
 
 hits = R == 1;
+
 pred = X * Theta';
-err = (pred - Y).^2;
-J = sum(err(hits))/2;
+err2 = (pred - Y).^2;
+J = sum(err2(hits)) / 2;
 
+err = (pred - Y) .* R;
+Theta_grad = err' * X;
 
-
-
-
-
-
-
+err = (pred - Y) .* R;
+X_grad = err * Theta;
 
 
 
