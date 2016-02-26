@@ -40,20 +40,21 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
-hits = R == 1;
-
+% Unregularized cost
 pred = X * Theta';
 err2 = (pred - Y).^2;
-J = sum(err2(hits)) / 2;
+J = sum(err2(R == 1)) / 2;
 
+% Gradients for Theta and X
 err = (pred - Y) .* R;
 Theta_grad = err' * X;
-
 err = (pred - Y) .* R;
 X_grad = err * Theta;
 
-
-
+% Regularized cost
+Theta_reg = (lambda / 2) * sum(sum(Theta.^2));
+X_reg = (lambda / 2) * sum(sum(X.^2));
+J = J + X_reg + Theta_reg;
 
 
 
